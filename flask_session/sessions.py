@@ -522,7 +522,9 @@ class SqlAlchemySessionInterface(SessionInterface):
                 val = saved_session.data
                 data = self.serializer.loads(want_bytes(val))
                 return self.session_class(data, sid=sid)
-            except:
+            except Exception as e:
+                print("Error deserializing session:")
+                print(e)
                 return self.session_class(sid=sid, permanent=self.permanent)
         return self.session_class(sid=sid, permanent=self.permanent)
 
