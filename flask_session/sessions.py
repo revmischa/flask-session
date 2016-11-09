@@ -479,8 +479,8 @@ class SqlAlchemySessionInterface(SessionInterface):
             __tablename__ = table
 
             id = self.db.Column(self.db.Integer, primary_key=True)
-            session_id = self.db.Column(self.db.String(256), unique=True)
             data = self.db.Column(self.db.LargeBinary)
+            session_id = self.db.Column(self.db.Text, unique=True)
             expiry = self.db.Column(self.db.DateTime)
 
             def __init__(self, session_id, data, expiry):
@@ -491,6 +491,7 @@ class SqlAlchemySessionInterface(SessionInterface):
             def __repr__(self):
                 return '<Session data %s>' % self.data
 
+        self.db.create_all()
         self.sql_session_model = Session
 
     def open_session(self, app, request):
